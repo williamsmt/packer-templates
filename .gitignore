@@ -1,0 +1,18 @@
+# Cache objects
+packer_cache/
+
+# Crash log
+crash.log
+
+# For built boxes
+*.box
+
+# Secrets
+.secrets
+
+# Temporary keys
+keys/
+
+# Ansible
+ansible/
+ansible-playbooks/

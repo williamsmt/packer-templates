@@ -1,0 +1,97 @@
+{
+  "builders": [
+    {
+      "CPUs": "{{user `vm-cpu-num`}}",
+      "RAM": "{{user `vm-mem-size`}}",
+      "boot_command": [
+        "<esc><wait>",
+        "<esc><wait>",
+        "<enter><wait>",
+        "/install/vmlinuz<wait>",
+        " auto<wait>",
+        " console-setup/ask_detect=false<wait>",
+        " console-setup/layoutcode=us<wait>",
+        " console-setup/modelcode=pc105<wait>",
+        " debconf/frontend=noninteractive<wait>",
+        " debian-installer=en_US<wait>",
+        " fb=false<wait>",
+        " initrd=/install/initrd.gz",
+        " kbd-chooser/method=us<wait>",
+        " keyboard-configuration/layout=USA<wait>",
+        " keyboard-configuration/variant=USA<wait>",
+        " locale=en_US",
+        " netcfg/get_domain=domain.local<wait>",
+        " netcfg/get_hostname=ubuntu<wait>",
+        " grub-installer/bootdev=/dev/sda<wait>",
+        " preseed/url={{user `ubuntu-preseed-url`}}<wait>",
+        " -- <wait>",
+        "<enter><wait>"
+      ],
+      "boot_order": "disk,cdrom",
+      "cluster": "{{user `cluster`}}",
+      "convert_to_template": true,
+      "cpu_cores": "{{user `vm-cpu-cores`}}",
+      "datacenter": "{{user `datacenter`}}",
+      "datastore": "{{user `datastore`}}",
+      "disk_controller_type": "pvscsi",
+      "folder": "{{user `folder`}}",
+      "guest_os_type": "ubuntu64Guest",
+      "host": "{{user `host`}}",
+      "insecure_connection": "{{user `vcenter-ssl-insecure`}}",
+      "iso_checksum": "sha256:8c5fc24894394035402f66f3824beb7234b757dd2b5531379cb310cedfdf0996",
+      "iso_urls": "http://cdimage.ubuntu.com/releases/18.04/release/ubuntu-18.04.5-server-amd64.iso",
+      "network_adapters": [
+        {
+          "network": "{{user `network`}}",
+          "network_card": "{{user `network-card`}}"
+        }
+      ],
+      "password": "{{user `vcenter-password`}}",
+      "ssh_password": "{{user `ssh-password`}}",
+      "ssh_username": "{{user `ssh-username`}}",
+      "storage": [
+        {
+          "disk_size": "{{user `vm-disk-size`}}",
+          "disk_thin_provisioned": "{{user `thin-provision`}}"
+        }
+      ],
+      "tools_sync_time": true,
+      "type": "vsphere-iso",
+      "username": "{{user `vcenter-username`}}",
+      "vcenter_server": "{{user `vcenter-server`}}",
+      "vm_name": "{{user `vm-name-prefix`}}-ubuntu-1804"
+    }
+  ],
+  "provisioners": [
+    {
+      "collections_path": "{{ user `ansible-root` }}/{{ user `ansible-collections-folder` }}",
+      "extra_arguments": [
+        "-e ssh_password=True",
+        "-e sudo_group={{user `sudo-group-name`}}",
+        "-e local_admin={{user `local-admin-name`}}",
+        "-e local_admin_key_http={{user `local-admin-key-http`}}",
+        "-e local_admin_key_file={{user `local-admin-key-file`}}",
+        "-v"
+      ],
+      "galaxy_file": "{{ user `ansible-root` }}/{{ user `ansible-req-file` }}",
+      "playbook_file": "{{ user `ansible-root` }}/{{ user `ansible-playbook` }}",
+      "roles_path": "{{ user `ansible-root` }}/{{ user `ansible-roles-folder` }}",
+      "type": "ansible",
+      "user": "{{ user `ansible-user` }}"
+    },
+    {
+      "inline": [
+        "echo 'Packer reboot to apply system update'",
+        "sudo reboot"
+      ],
+      "expect_disconnect": true,
+      "type": "shell"
+    },
+    {
+      "script": "scripts/debian-dehydrate.sh",
+      "execute_command": "chmod +x {{ .Path }}; sudo {{ .Path }}",
+      "pause_before": "60s",
+      "type": "shell"
+    }
+  ]
+}

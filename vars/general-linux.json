@@ -1,0 +1,13 @@
+{
+    "ansible-playbook": "deployBase.yml",
+
+    "vm-name-prefix": "template",
+    "sudo-group-name": "zsudoers",
+    "local-admin-name": "localadmin",
+    "local-admin-key-http": "https://github.com/williamsmt.keys",
+
+    "vm-cpu-num": "2",
+    "vm-cpu-cores": "2",
+    "vm-mem-size": "2048",
+    "vm-disk-size": "20480"
+}
