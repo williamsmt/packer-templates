@@ -25,7 +25,7 @@ Prerequisites:
 - [x] Ubuntu Server >= 18.04 LTS
 - [x] CentOS >= 7
 - [ ] CentOS Stream
-- [ ] Windows Server >= 2016
+- [x] Windows Server >= 2016
 
 ### Supported Builders
 
@@ -95,6 +95,8 @@ Template | Description
 `ubuntu-2004.json` | Ubuntu Server 20.04
 `centos-7.json` | CentOS 7
 `centos-8.json` | CentOS 8
+`winserv-2019.json` | Windows Server 2019
+`winserv-2016.json` | Windows Server 2016
 
 ### Builders
 
@@ -120,6 +122,7 @@ File | Description
 --- | ---
 `global.json` | Global defaults for various provisioners and builders
 `general-linux.json` | Defines guest specs and Ansible playbook for a general-purpose Linux template
+`general-windows.json` | Defines guest specs and provisioner for general-purpose Windows template
 `preseed.cfg` | Answer file for Ubuntu installation
 `*-ks.cfg` | Answer file for CentOS installations
 `secrets.example` | File holding CSP credentials and should be copied to `.secrets` for use

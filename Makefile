@@ -47,3 +47,6 @@ packer-build-centos8-vmware:
 	$(MAKE) install-ansible-playbook
 	packer build -var-file=./vars/global.json -var-file=./vars/general-linux.json -only=vsphere-iso centos-8.json
 	$(MAKE) clean
+
+packer-build-win2019-vmware:
+	packer build -var-file=./vars/global.json -var-file=./vars/general-windows.json -only=vsphere-iso winserv-2019.json
