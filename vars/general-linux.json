@@ -1,5 +1,13 @@
 {
     "ansible-playbook": "deployBase.yml",
+    "ansible-user": "{{ user `ssh-username` }}",
+
+    "ssh-username": "packer",
+    "ssh-password": "packer",
+
+    "ubuntu-preseed-url": "https://raw.githubusercontent.com/williamsmt/packer-templates/main/config/preseed.cfg",
+    "centos7-kickstart-url": "https://raw.githubusercontent.com/williamsmt/packer-templates/main/config/centos7-ks.cfg",
+    "centos8-kickstart-url": "https://raw.githubusercontent.com/williamsmt/packer-templates/main/config/centos8-ks.cfg",
 
     "vm-name-prefix": "template",
     "sudo-group-name": "zsudoers",

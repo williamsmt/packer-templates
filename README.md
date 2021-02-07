@@ -25,7 +25,7 @@ Prerequisites:
 - [x] Ubuntu Server >= 18.04 LTS
 - [x] CentOS >= 7
 - [ ] CentOS Stream
-- [ ] Windows Server
+- [ ] Windows Server >= 2016
 
 ### Supported Builders
 
@@ -98,19 +98,19 @@ Template | Description
 
 ### Builders
 
-A list of Packer builders and their configuration files:
+A list of Packer builders and their details:
 
-Builder | Var File | Description
-------- | -------- | -----------
-`vsphere-iso` | `global.json` | VM template created in vCenter
+Builder | Description
+------- | -----------
+`vsphere-iso` | VM template created in SDDC/vCenter folder
 
 ### Provisioners
 
-A list of Packer provisioners and their configuration files:
+A list of Packer provisioners and their details:
 
 Provisioner | Var File | Description
 ----------- | -------- | -----------
-Ansible | `global.json` | Various Ansible baseline [playbooks](https://github.com/williamsmt/ansible-playbooks).
+Ansible | Various Ansible baseline [playbooks](https://github.com/williamsmt/ansible-playbooks).
 
 ### Other Configuration Files
 
@@ -118,9 +118,10 @@ Various other configuration and variable files:
 
 File | Description
 --- | ---
-`general-linux.json` | Defines guest specs and Ansible playbook for a general-purpose VM template
+`global.json` | Global defaults for various provisioners and builders
+`general-linux.json` | Defines guest specs and Ansible playbook for a general-purpose Linux template
 `preseed.cfg` | Answer file for Ubuntu installation
-`ks.cfg` | Answer file for CentOS installation
+`*-ks.cfg` | Answer file for CentOS installations
 `secrets.example` | File holding CSP credentials and should be copied to `.secrets` for use
 
 ## License
