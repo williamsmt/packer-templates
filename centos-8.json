@@ -1,33 +1,29 @@
 {
   "builders": [
     {
-      "CPUs": "{{user `vm-cpu-num`}}",
-      "RAM": "{{user `vm-mem-size`}}",
-      "boot_command": [
-        "<tab><bs><bs><bs><bs><bs> text ks={{user `centos8-kickstart-url`}}<enter><wait>"
-      ],
-      "boot_order": "disk,cdrom",
-      "cluster": "{{user `cluster`}}",
-      "convert_to_template": true,
-      "cpu_cores": "{{user `vm-cpu-cores`}}",
-      "datacenter": "{{user `datacenter`}}",
-      "datastore": "{{user `datastore`}}",
-      "disk_controller_type": "pvscsi",
-      "folder": "{{user `folder`}}",
-      "guest_os_type": "centos8_64Guest",
-      "host": "{{user `host`}}",
+      "type": "vsphere-iso",
+      "vcenter_server": "{{user `vcenter-server`}}",
       "insecure_connection": "{{user `vcenter-ssl-insecure`}}",
-      "iso_checksum": "sha256:2b801bc5801816d0cf27fc74552cf058951c42c7b72b1fe313429b1070c3876c",
-      "iso_urls": "http://mirrors.mit.edu/centos/8.3.2011/isos/x86_64/CentOS-8.3.2011-x86_64-boot.iso",
+      "username": "{{user `vcenter-username`}}",
+      "password": "{{user `vcenter-password`}}",
+      "datacenter": "{{user `datacenter`}}",
+      "cluster": "{{user `cluster`}}",
+      "host": "{{user `host`}}",
+      "folder": "{{user `folder`}}",
+      "datastore": "{{user `datastore`}}",
+      "vm_name": "{{user `vm-name-prefix`}}-centos-8",
+      "guest_os_type": "centos8_64Guest",
+      "convert_to_template": true,
+      "CPUs": "{{user `vm-cpu-num`}}",
+      "cpu_cores": "{{user `vm-cpu-cores`}}",
+      "RAM": "{{user `vm-mem-size`}}",
       "network_adapters": [
         {
           "network": "{{user `network`}}",
           "network_card": "{{user `network-card`}}"
         }
       ],
-      "password": "{{user `vcenter-password`}}",
-      "ssh_password": "{{user `ssh-password`}}",
-      "ssh_username": "{{user `ssh-username`}}",
+      "disk_controller_type": "pvscsi",
       "storage": [
         {
           "disk_size": "{{user `vm-disk-size`}}",
@@ -35,10 +31,14 @@
         }
       ],
       "tools_sync_time": true,
-      "type": "vsphere-iso",
-      "username": "{{user `vcenter-username`}}",
-      "vcenter_server": "{{user `vcenter-server`}}",
-      "vm_name": "{{user `vm-name-prefix`}}-centos-8"
+      "iso_checksum": "sha256:2b801bc5801816d0cf27fc74552cf058951c42c7b72b1fe313429b1070c3876c",
+      "iso_urls": "http://mirrors.mit.edu/centos/8.3.2011/isos/x86_64/CentOS-8.3.2011-x86_64-boot.iso",
+      "ssh_password": "{{user `ssh-password`}}",
+      "ssh_username": "{{user `ssh-username`}}",
+      "boot_order": "disk,cdrom",
+      "boot_command": [
+        "<tab><bs><bs><bs><bs><bs> text ks={{user `centos8-kickstart-url`}}<enter><wait>"
+      ]
     }
   ],
   "provisioners": [
