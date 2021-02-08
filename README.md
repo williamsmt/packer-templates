@@ -50,6 +50,8 @@ install-ansible-playbook:
 
 Invoking this block is as simple as `make install-ansible-playbook` from within the packer-template directory, but largely unnecessary unless you are reviewing the provisioner details.
 
+Additionally, Windows templates deployed with the `vsphere-iso` builder require the OS `.iso` and the VMware Tools `.iso` to be available on a datastore or vCenter Content Library prior to build. They will each be mounted as `.iso` files to the guest for installation.
+
 ### Independent Run
 
 Make any necessary variable changes within the template and the installed dependencies (see below configuration file table). Once satisfied with defined settings to be applied, templates can be deployed as documented below.
@@ -61,6 +63,8 @@ VSPHERE_USER=administrator@vsphere.local
 VSPHERE_PASS=Password123!
 VSPHERE_URL=vcenter.domain.local
 ```
+
+**Note:** As previously mentioned, Windows templates must have access to the OS and VMware Tools `.iso` files prior to running a build.
 
 Confirm you are satisfied with the customization to the relevant configuration files identified below, then deploy the template using the Makefile:
 
@@ -86,7 +90,9 @@ packer-templates/
 │   ├── debian-dehydrate.sh        Generalizes the machine
 │   └── debian-rehydrate.sh        Unused for now
 └── config/                     Configuration files
-    └── preseed.cfg                Linux flavor preseed file
+    ├── preseed.cfg                Linux flavor preseed file
+    └── unattend-2019              Answer files for Windows
+        └── autounattend.xml          Unattend for Windows Server 2019
 ```
 
 Template | Description
@@ -125,6 +131,7 @@ File | Description
 `general-windows.json` | Defines guest specs and provisioner for general-purpose Windows template
 `preseed.cfg` | Answer file for Ubuntu installation
 `*-ks.cfg` | Answer file for CentOS installations
+`autounattend.xml` | Answer file for Windows installations
 `secrets.example` | File holding CSP credentials and should be copied to `.secrets` for use
 
 ## License
