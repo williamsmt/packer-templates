@@ -1,5 +1,8 @@
 $ErrorActionPreference = "Stop"
 
+# Need to wait for VMware tools to finish its business
+Start-Sleep -s 120
+
 # Switch network connection to private mode
 # Required for WinRM firewall rules
 $profile = Get-NetConnectionProfile
