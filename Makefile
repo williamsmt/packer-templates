@@ -50,3 +50,6 @@ packer-build-centos8-vmware:
 
 packer-build-win2019-vmware:
 	packer build -var-file=./vars/global.json -var-file=./vars/general-windows.json -only=vsphere-iso winserv-2019.json
+
+packer-build-win2016-vmware:
+	packer build -var-file=./vars/global.json -var-file=./vars/general-windows.json -only=vsphere-iso winserv-2016.json

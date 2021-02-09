@@ -1,0 +1,56 @@
+{
+  "builders": [
+    {
+      "type": "vsphere-iso",
+      "vcenter_server": "{{user `vcenter-server`}}",
+      "insecure_connection": "{{user `vcenter-ssl-insecure`}}",
+      "username": "{{user `vcenter-username`}}",
+      "password": "{{user `vcenter-password`}}",
+      "datacenter": "{{user `datacenter`}}",
+      "cluster": "{{user `cluster`}}",
+      "host": "{{user `host`}}",
+      "folder": "{{user `folder`}}",
+      "datastore": "{{user `datastore`}}",
+      "vm_name": "{{user `vm-name-prefix`}}-winserver-2016",
+      "guest_os_type": "windows9Server64Guest",
+      "convert_to_template": true,
+      "CPUs": "{{user `vm-cpu-num`}}",
+      "cpu_cores": "{{user `vm-cpu-cores`}}",
+      "RAM": "{{user `vm-mem-size`}}",
+      "network_adapters": [
+        {
+          "network": "{{user `network`}}",
+          "network_card": "{{user `network-card`}}"
+        }
+      ],
+      "disk_controller_type": "lsilogic-sas",
+      "storage": [
+        {
+          "disk_size": "{{user `vm-disk-size`}}",
+          "disk_thin_provisioned": "{{user `thin-provision`}}"
+        }
+      ],
+      "tools_sync_time": true,
+      "firmware": "bios",
+      "iso_paths": [
+        "vmimages/windows_server_2016/en_windows_server_2016.iso",
+        "{{user `vmtools_iso_path`}}"
+      ],
+      "floppy_files": [
+        "config/unattend-2016/autounattend.xml",
+        "scripts/install-vmtools.cmd",
+        "scripts/enable-winrm.ps1"
+      ],
+      "communicator": "winrm",
+      "winrm_timeout": "1h30m",
+      "winrm_username": "{{user `winrm-username`}}",
+      "winrm_password": "{{user `winrm-password`}}"
+    }
+  ],
+  "provisioners": [
+    {
+      "type": "windows-shell",
+      "inline": ["ipconfig/all"]
+    }
+  ]
+}
